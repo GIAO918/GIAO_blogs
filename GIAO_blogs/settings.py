@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -77,8 +76,12 @@ WSGI_APPLICATION = 'GIAO_blogs.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "giao_blogs",
+        'USER':"root",
+        "PASSWORD":'',
+        'HOST':"127.0.0.1",
+        "POST":3306,
     }
 }
 
