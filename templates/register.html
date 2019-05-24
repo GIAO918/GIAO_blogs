@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎注册</title>
+{#    <link rel="stylesheet" href="/static/bootstrap-3.3.7/dist/css/bootstrap.min.css">#}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/mystyle.css">
+</head>
+<body>
+<div class="container">
+    <div class = 'row'>
+        <div class="col-md-6 col-md-offset-3" >
+            <form action="/reg/" method="post" class="form-horizontal reg-form">
+            {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form_obj.username.id_for_label }}" class="col-sm-2 control-label">{{ form_obj.username.label }}</label>
+                    <div class="col-sm-10">
+                        {{ form_obj.username }}
+                        <span class="help-block"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form_obj.password.id_for_label }}" class="col-sm-2 control-label">{{ form_obj.password.label }}</label>
+                    <div class="col-sm-10">
+                        {{ form_obj.password }}
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form_obj.re_password.id_for_label }}" class="col-sm-2 control-label">{{ form_obj.re_password.label }}</label>
+                    <div class="col-sm-10">
+                        {{ form_obj.re_password }}
+                        <span  class="help-block"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form_obj.email.id_for_label }}" class="col-sm-2 control-label">{{ form_obj.email.label }}</label>
+                    <div class="col-sm-10">
+                        {{ form_obj.email }}
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">头像</label>
+                    <div class="col-sm-10">
+                        <label for="id_avatar"><img src="/static/image/112.jpg" alt=""></label>
+                        <input type="file" name = "avatar" id = "id_avatar" style="display: None">
+                    <span class="help-block"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-2 col-md-offset-7">
+                    <button type="submit" class="btn btn-success">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{#<script src = '/static/bootstrap-3.3.7/dist/js/bootstrap.min.js'></script>#}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
