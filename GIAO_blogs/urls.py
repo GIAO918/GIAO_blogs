@@ -18,6 +18,7 @@ from django.urls import path
 from django.conf.urls import url
 from blog import views
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    url(r"^reg$",views.register),
+    # path('admin/', admin.site.urls),
+    url(r"^reg",views.register),
+    url(r"^login_in",views.login_in)
 ]
