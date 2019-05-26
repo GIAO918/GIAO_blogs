@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<div class="container">
+    <div class = "row">
+        <div class="col-md-4 col-md-offset-4">
+              <form class="form-signin" action="login.html" method="post">
+                  {% csrf_token %}
+                <h2 class="form-signin-heading">博客登录</h2>
+                <label for="inputEmail" class="sr-only">用户名</label>
+                <input type="text" id="inputEmail" name = "username" class="form-control" placeholder="Email address" required autofocus>
+                <label for="inputPassword" class="sr-only">密码</label>
+                <input type="password" id="inputPassword"  name = "password" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+              </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

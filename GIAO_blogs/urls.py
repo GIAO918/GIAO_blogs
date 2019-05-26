@@ -19,6 +19,7 @@ from django.conf.urls import url
 from blog import views
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    url(r"^reg",views.register),
-    url(r"^login_in",views.login_in)
+    url(r"^register",views.register),
+    url(r"^login",views.login),
+    # url(r"^logout",views.logout_view)
 ]

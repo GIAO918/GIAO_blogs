@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
@@ -26,8 +25,6 @@ SECRET_KEY = 'jqelwwqi*-&3*72-o8*%=d&6wt%#b#46b0e)fw-geg&r+#!zc#'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -70,7 +67,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GIAO_blogs.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
@@ -78,13 +74,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': "giao_blogs",
-        'USER':"root",
-        "PASSWORD":'',
-        'HOST':"127.0.0.1",
-        "POST":3306,
+        'USER': "root",
+        "PASSWORD": '',
+        'HOST': "127.0.0.1",
+        "POST": 3306,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
@@ -104,7 +99,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -118,11 +112,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
 STATICFILES = (
-    os.path.join(BASE_DIR,"static")
+    os.path.join(BASE_DIR, "static")
 )
+LOGIN_URL = '/login_in/'  # 这里配置成你项目登录页面的路由
+
+AUTH_USER_MODEL = "blog.UserInfo"  # APP下边的models里边的类
