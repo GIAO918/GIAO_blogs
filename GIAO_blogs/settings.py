@@ -115,10 +115,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# STATIC_URL = '/static/'
+# STATICFILES = (
+#     os.path.join(BASE_DIR, "static")
+# )
+
 STATIC_URL = '/static/'
-STATICFILES = (
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
-)
+]
 LOGIN_URL = '/login_in/'  # 这里配置成你项目登录页面的路由
 
 AUTH_USER_MODEL = "blog.UserInfo"  # APP下边的models里边的类
