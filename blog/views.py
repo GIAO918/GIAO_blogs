@@ -5,7 +5,6 @@ from blog import models
 
 from django.contrib.auth.decorators import login_required
 
-
 # 注册功能视图
 def register(request):
     if request.method == "POST":
@@ -14,7 +13,7 @@ def register(request):
             # 如果校验通过，去数据库创建一个新的用户
             form_obj.cleaned_data.pop("re_password")
             models.UserInfo.objects.create_user(**form_obj.cleaned_data)
-            return HttpResponse("注册成功")
+            return redirect("/index/")
         else:
             return render(request, "register.html", {"form_obj": form_obj})
 
@@ -22,14 +21,23 @@ def register(request):
     return render(request, "register.html", {"form_obj": form_obj})
 
 
-def login(request):
+def login_in(request):
     if request.method == "POST":
         username = request.POST.get("username")
         password = request.POST.get("password")
         # 判断用户名密码是否正确
         user = authenticate(username=username, password=password)
         if user:
-            return HttpResponse("登录成功")
+            login(request,user)
+            return render(request,"index.html")
         else:
             return HttpResponse("登录失败")
     return render(request, "login.html")
+
+def logout_view(request):
+    logout(request)  # 已经封装了用户的request
+    return redirect("/login/")
+
+def index(request):
+    article_list = models.Article.objects.all()
+    return render(request,"index.html",{'article_list':article_list})

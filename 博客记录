@@ -1,3 +1,4 @@
+实现用户系统注册 登录
 1自己写UserInfo继承内置AbstractUser 实现登录校验
+2 用form组件写注册功能(可优化的地方，可以使用AJAX提交)
 
-2 用form组件写注册功能(本地引用bootstrap不生效)

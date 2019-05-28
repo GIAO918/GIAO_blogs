@@ -19,7 +19,8 @@ from django.conf.urls import url
 from blog import views
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    url(r"^index",views.index),
     url(r"^register",views.register),
-    url(r"^login",views.login),
-    # url(r"^logout",views.logout_view)
+    url(r"^login",views.login_in),
+    url(r"^logout_view",views.logout_view)
 ]
