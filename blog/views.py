@@ -13,13 +13,10 @@ def register(request):
         if form_obj.is_valid():
             # 如果校验通过，去数据库创建一个新的用户
             form_obj.cleaned_data.pop("re_password")
-            user_dict = form_obj.cleaned_data
-            print(user_dict)
             models.UserInfo.objects.create_user(**form_obj.cleaned_data)
             return HttpResponse("注册成功")
         else:
-            print(form_obj.errors)
-            return HttpResponse("注册失败")
+            return render(request, "register.html", {"form_obj": form_obj})
 
     form_obj = forms.RegForm()  # 生成form对象
     return render(request, "register.html", {"form_obj": form_obj})

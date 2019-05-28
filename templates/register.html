@@ -10,24 +10,24 @@
 <div class="container">
     <div class='row'>
         <div class="col-md-6 col-md-offset-3">
-            <form action="/register/" method="post" class="form-horizontal reg-form" enctype="multipart/form-data">
+            <form action="/register/" method="post" class="form-horizontal reg-form" enctype="multipart/form-data"
+                  novalidate>
                 {% csrf_token %}
 
                 <div class="form-group">
                     <label for="{{ form_obj.username.id_for_label }}"
                            class="col-sm-2 control-label">{{ form_obj.username.label }}</label>
                     <div class="col-sm-10">
-                        {{ form_obj.username }}
+                        {{ form_obj.username }}{{ form_obj.username.errors.0 }}
                         <span class="help-block"></span>
                     </div>
-
                 </div>
 
                 <div class="form-group">
                     <label for="{{ form_obj.password.id_for_label }}"
                            class="col-sm-2 control-label">{{ form_obj.password.label }}</label>
                     <div class="col-sm-10">
-                        {{ form_obj.password }}
+                        {{ form_obj.password }}{{ form_obj.password.errors.0 }}
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -36,7 +36,7 @@
                     <label for="{{ form_obj.re_password.id_for_label }}"
                            class="col-sm-2 control-label">{{ form_obj.re_password.label }}</label>
                     <div class="col-sm-10">
-                        {{ form_obj.re_password }}
+                        {{ form_obj.re_password }}{{ form_obj.re_password.errors.0 }}
                         <span class="help-block"></span>
                     </div>
 
@@ -46,7 +46,7 @@
                     <label for="{{ form_obj.email.id_for_label }}"
                            class="col-sm-2 control-label">{{ form_obj.email.label }}</label>
                     <div class="col-sm-10">
-                        {{ form_obj.email }}
+                        {{ form_obj.email }}{{ form_obj.email.errors.0 }}
                         <span class="help-block"></span>
                     </div>
                 </div>
@@ -54,7 +54,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">头像</label>
                     <div class="col-sm-10">
-                        <label for="id_avatar" ><img id="avatar-img" src="/static/img/hmbb.png" alt=""></label>
+                        <label for="id_avatar"><img id="avatar-img" src="/static/img/hmbb.png" alt=""></label>
                         <input type="file" name="avatar" id="id_avatar" style="display: None">
                         <span class="help-block"></span>
                     </div>
