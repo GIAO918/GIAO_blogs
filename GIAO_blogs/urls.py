@@ -17,10 +17,17 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
 from blog import views
+
+from django.views.static import serve
+from django.conf import settings
+
 urlpatterns = [
-    # path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     url(r"^index",views.index),
     url(r"^register",views.register),
     url(r"^login",views.login_in),
-    url(r"^logout_view",views.logout_view)
+    url(r"^logout_view",views.logout_view),
+
+    # media路由配置
+    url(r"media/(?P<path>.*)$",serve,{"document_root":settings.MEDIA_ROOT}),
 ]

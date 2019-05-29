@@ -2,3 +2,5 @@
 1自己写UserInfo继承内置AbstractUser 实现登录校验
 2 用form组件写注册功能(可优化的地方，可以使用AJAX提交)
 
+使用bootstrap设计主页，并使用内置admin填充数据
+主页显示每条信息，左边应该有头像，头像的话在bootstrap里媒体对象里有样式

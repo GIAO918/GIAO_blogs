@@ -21,3 +21,11 @@
     width: 80px;
     height: 80px;
 }
+/*博客主页面样式*/
+#author_img{
+    width: 80px;
+    height:80px;
+}
+.article_footer{
+    margin-top: 10px;
+}

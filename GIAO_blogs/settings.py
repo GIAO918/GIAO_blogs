@@ -102,7 +102,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-Hans'
 
 TIME_ZONE = 'UTC'
 
@@ -127,3 +127,9 @@ STATICFILES_DIRS = [
 LOGIN_URL = '/login_in/'  # 这里配置成你项目登录页面的路由
 
 AUTH_USER_MODEL = "blog.UserInfo"  # APP下边的models里边的类
+
+# 每个用户上传的图片、媒体文件都放在这里
+MEDIA_URL = "/media/"
+
+# media配置，用户上传的文件都默认放在这个文件夹下
+MEDIA_ROOT = os.path.join(BASE_DIR,"media")

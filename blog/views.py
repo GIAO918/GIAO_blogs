@@ -12,8 +12,9 @@ def register(request):
         if form_obj.is_valid():
             # 如果校验通过，去数据库创建一个新的用户
             form_obj.cleaned_data.pop("re_password")
-            models.UserInfo.objects.create_user(**form_obj.cleaned_data)
-            return redirect("/index/")
+            avatar_img = request.FILES.get("avatar")
+            models.UserInfo.objects.create_user(**form_obj.cleaned_data,avatar= avatar_img)
+            return HttpResponse("注册成功")
         else:
             return render(request, "register.html", {"form_obj": form_obj})
 
