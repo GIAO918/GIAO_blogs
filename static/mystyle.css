@@ -21,11 +21,33 @@
     width: 80px;
     height: 80px;
 }
+
 /*博客主页面样式*/
-#author_img{
+#author_img {
     width: 80px;
-    height:80px;
+    height: 80px;
 }
-.article_footer{
+
+.article_footer {
     margin-top: 10px;
 }
+
+/*个人主页样式*/
+.header {
+    height: 100px;
+    width: 100%;
+    color: white;
+    background-color: #0066cc;
+}
+
+.header p {
+    font-size: 25px;
+    padding: 25px 0;
+    font-weight: bold;
+}
+
+
+
+
+
+

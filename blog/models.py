@@ -28,9 +28,9 @@ class Blog(models.Model):
     博客信息
     """
     nid = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=64)  # 个人博客标题
-    site = models.CharField(max_length=32, unique=True)  # 个人博客后缀
-    theme = models.CharField(max_length=32)  # 博客主题
+    title = models.CharField(max_length=64,verbose_name="个人博客标题")  # 个人博客标题
+    site = models.CharField(max_length=32, unique=True,verbose_name="个人博客后缀")  # 个人博客后缀
+    theme = models.CharField(max_length=32,verbose_name="博客主题")  # 博客主题
 
     def __str__(self):
         return self.title

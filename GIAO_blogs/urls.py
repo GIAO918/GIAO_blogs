@@ -15,19 +15,23 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url, include
 from blog import views
+from blog import urls as blog_urls
 
 from django.views.static import serve
 from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r"^index",views.index),
-    url(r"^register",views.register),
-    url(r"^login",views.login_in),
-    url(r"^logout_view",views.logout_view),
+    url(r"^index", views.index),
+    url(r"^register", views.register),
+    url(r"^login", views.login_in),
+    url(r"^logout_view", views.logout_view),
+
+    # 将所有以blog开头的url，都分发给blog这个app下边的urls来处理
+    url(r"^blog/", include(blog_urls)),
 
     # media路由配置
-    url(r"media/(?P<path>.*)$",serve,{"document_root":settings.MEDIA_ROOT}),
+    url(r"media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
 ]
