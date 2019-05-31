@@ -57,9 +57,13 @@ def home(request, username=None):
 
     article_list = models.Article.objects.filter(user=user)
 
-    category_list = models.Category.objects.filter(blog=blog)
-    # 利用分组查询，查看每个用户下有多少文章分类，每个分类有多少文章
-    # from django.db.models import Count
-    # ret = models.Category.objects.filter(blog=blog).annotate(a=Count("article")).filter("title", "a")
-    # print(ret)
-    return render(request, "home.html", {"blog": blog, "article_list": article_list, "category_list": category_list})
+    # category_list = models.Category.objects.filter(blog=blog)
+    # 利用分组查询，查看每个用户下有多少文章分类，并把这些分类下有多少文章计算出来
+    from django.db.models import Count
+    category_list = models.Category.objects.filter(blog=blog).annotate(a=Count("article")).filter(a__gt=0)
+    # 这里前半部分获取的是当前用户下共有多少分类，.annotate把这些分类分组，求出每个分组下共有多少文章，最后的filter
+    # 过滤掉文章数等于0的分组
+
+    tag_list = models.Tag.objects.filter(blog = blog).annotate(a = Count("article")).filter(a__gt = 0)
+    return render(request, "home.html", {"blog": blog, "article_list": article_list, "category_list": category_list
+                  ,"tag_list":tag_list})

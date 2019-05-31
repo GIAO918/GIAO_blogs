@@ -18,14 +18,21 @@
                 <div class="panel-heading">文章分类</div>
                 <div class="panel-body">
                     {% for category in category_list %}
-                        <p>{{ category.title }} ({{ category.article_set.all.count }})</p>
+                        <p>{{ category.title }} ({{ category.a }})</p>
                     {% endfor %}
-
                 </div>
             </div>
+        <div class="panel panel-primary">
+                <div class="panel-heading">标签分类</div>
+                <div class="panel-body">
+                    {% for tag in tag_list %}
+                        <p>{{ tag.title }} ({{ tag.a }})</p>
+                    {% endfor %}
+                </div>
+        </div>
         </div>
         <div class="col-md-8">
-             <div class="article_list">
+            <div class="article_list">
                 {% for article in article_list %}
 
                     <div class="article">
@@ -33,17 +40,19 @@
                         <div class="media">
                             <div class="media-left">
                                 <a href="#">
-                                    <img id = "author_img" class="media-object" src="/media/{{ article.user.avatar }}" alt="...">
+                                    <img id="author_img" class="media-object" src="/media/{{ article.user.avatar }}"
+                                         alt="...">
                                 </a>
                             </div>
                             <div class="media-body">
                                 <h4 class="media-heading">{{ article.desc }}</h4>
                                 ...
                             </div>
-                            <div class = "article_footer">
+                            <div class="article_footer">
                                 <span><a href="/blog/{{ article.user.username }}">{{ article.user.username }}</a></span>&nbsp;&nbsp;&nbsp;
-                                发布于<span>{{ article.create_time |date:"Y-m-d H:i:s"}}</span>&nbsp;&nbsp;&nbsp
-                                <span><i class="fa fa-commenting-o" aria-hidden="true"></i>评论({{ article.comment_set.all.count }})</span>&nbsp;&nbsp;
+                                发布于<span>{{ article.create_time |date:"Y-m-d H:i:s" }}</span>&nbsp;&nbsp;&nbsp
+                                <span><i class="fa fa-commenting-o"
+                                         aria-hidden="true"></i>评论({{ article.comment_set.all.count }})</span>&nbsp;&nbsp;
                                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">点赞()</span>&nbsp;&nbsp;&nbsp;
                                 <hr>
                             </div>
