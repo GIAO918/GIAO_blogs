@@ -64,6 +64,12 @@ def home(request, username=None):
     # 这里前半部分获取的是当前用户下共有多少分类，.annotate把这些分类分组，求出每个分组下共有多少文章，最后的filter
     # 过滤掉文章数等于0的分组
 
-    tag_list = models.Tag.objects.filter(blog = blog).annotate(a = Count("article")).filter(a__gt = 0)
+    tag_list = models.Tag.objects.filter(blog=blog).annotate(a=Count("article")).filter(a__gt=0)
+
+    # 按日期给用户的文章进行归档
+    archive_list= models.Article.objects.filter(user=user).extra(
+        select={"archive": "date_format(create_time,'%%Y-%%m')"}
+    ).values("archive").annotate(c=Count("nid")).values("archive", 'c')
+
     return render(request, "home.html", {"blog": blog, "article_list": article_list, "category_list": category_list
-                  ,"tag_list":tag_list})
+        , "tag_list": tag_list,"archive_list":archive_list})

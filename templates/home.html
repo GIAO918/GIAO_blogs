@@ -30,6 +30,14 @@
                     {% endfor %}
                 </div>
         </div>
+        <div class="panel panel-primary">
+                <div class="panel-heading">日期分类</div>
+                <div class="panel-body">
+                    {% for archive in archive_list %}
+                        <p>{{ archive.archive}} ({{ archive.c }})</p>
+                    {% endfor %}
+                </div>
+        </div>
         </div>
         <div class="col-md-8">
             <div class="article_list">
