@@ -23,8 +23,8 @@ SECRET_KEY = 'jqelwwqi*-&3*72-o8*%=d&6wt%#b#46b0e)fw-geg&r+#!zc#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = []
+# 服务器启动的时候需要用到
+ALLOWED_HOSTS = ['47.106.233.231', 'localhost', '0.0.0.0:8000', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
