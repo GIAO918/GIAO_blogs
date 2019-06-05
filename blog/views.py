@@ -5,7 +5,8 @@ from blog import models
 
 from django.contrib.auth.decorators import login_required
 
-
+def love(request):
+    return render(request,'521.html')
 # 注册功能视图
 def register(request):
     if request.method == "POST":
