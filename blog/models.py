@@ -121,7 +121,7 @@ class Article2Tag(models.Model):
     class Meta:
         unique_together = (("article", "tag"),)
 
-        verbose_name = "文章-标签"
+        verbose_name = "文章标签"
         verbose_name_plural = verbose_name
 
 

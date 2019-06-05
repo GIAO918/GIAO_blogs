@@ -7,3 +7,4 @@ if __name__ == "__main__":
     django.setup()  # 导入django模块并启动
     from blog import models
     from django.db.models import Count
+    print(models.Article.objects.values("category"))
