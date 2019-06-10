@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth import login, logout, authenticate
 from blog import forms
 from blog import models
-
+from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 
 
@@ -64,7 +64,7 @@ def home(request, username=None):
     # category_list = models.Category.objects.filter(blog=blog)
 
     # 利用分组查询，查看每个用户下有多少文章分类，并把这些分类下有多少文章计算出来
-    from django.db.models import Count
+
     category_list = models.Category.objects.filter(blog=blog).annotate(a=Count("article"))
     # 这里前半部分获取的是当前用户下共有多少分类，.annotate把这些分类分组，求出每个分组下共有多少文章，最后的filter
     # 过滤掉文章数等于0的分组
@@ -77,13 +77,33 @@ def home(request, username=None):
     ).values("archive").annotate(c=Count("nid")).values("archive", 'c')
 
     return render(request, "home.html", {
+        "user":user,
         "blog": blog,
         "article_list": article_list,
         "category_list": category_list,
         "tag_list": tag_list,
         "archive_list": archive_list})
 
+# 定义一个函数，得到个人博客左侧页面的数据
+def get_left_menu(user,blog):
+    category_list = models.Category.objects.filter(blog=blog).annotate(a=Count("article"))
+    tag_list = models.Tag.objects.filter(blog=blog).annotate(a=Count("article")).filter(a__gt=0)
+    archive_list = models.Article.objects.filter(user=user).extra(
+        select={"archive": "date_format(create_time,'%%Y-%%m')"}
+    ).values("archive").annotate(c=Count("nid")).values("archive", 'c')
+    return category_list,tag_list,archive_list
 
-def article_detail(request, pk):  # 跳转到文章详情页
+def article_detail(request, username,pk):  # 跳转到文章详情页
+    print(username,pk)
+    user = models.UserInfo.objects.filter(username = username).first()  # 查询出用户对象
+    blog = user.blog
     article_obj = models.Article.objects.filter(nid=pk).first()
-    return render(request,"article_detail.html",{"article":article_obj})
+    category_list,tag_list,archive_list = get_left_menu(user,blog)
+
+    return render(request,"article_detail.html",
+                  {"article":article_obj,
+                   "blog":blog,
+                   "category_list":category_list,
+                   "tag_list":tag_list,
+                   "archive_list":archive_list
+                   })
