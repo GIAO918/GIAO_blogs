@@ -5,8 +5,11 @@ from blog import models
 
 from django.contrib.auth.decorators import login_required
 
+
 def love(request):
-    return render(request,'521.html')
+    return render(request, '521.html')
+
+
 # 注册功能视图
 def register(request):
     if request.method == "POST":
@@ -79,3 +82,8 @@ def home(request, username=None):
         "category_list": category_list,
         "tag_list": tag_list,
         "archive_list": archive_list})
+
+
+def article_detail(request, pk):  # 跳转到文章详情页
+    article_obj = models.Article.objects.filter(nid=pk).first()
+    return render(request,"article_detail.html",{"article":article_obj})
