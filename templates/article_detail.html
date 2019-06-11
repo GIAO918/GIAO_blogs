@@ -2,6 +2,6 @@
 {% block page-main %}
     <div class="article-detail">
         <h1>{{ article.title }}</h1>
-        <span>{{ article.articledetail.content }}</span>
+        <span>{{ article.articledetail.content|safe }}</span>
     </div>
 {% endblock %}
