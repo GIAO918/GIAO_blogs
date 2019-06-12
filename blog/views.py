@@ -6,10 +6,6 @@ from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 
 
-def love(request):
-    return render(request, '521.html')
-
-
 # 注册功能视图
 def register(request):
     if request.method == "POST":
@@ -101,7 +97,10 @@ def article_detail(request, username, pk):  # 跳转到文章详情页
 
 
 def ret_tags(request, username=None, i=None):
-    print(username, i)
-    blog = username.blog
-    user_obj = models.UserInfo.objects.filter(username=username).first()
-    return HttpResponse('666')
+    user = models.UserInfo.objects.filter(username=username).first()
+    blog=user.blog
+    i = models.Category.objects.filter(title=i)
+    article_list = user.article_set.all()
+    article_list = article_list.filter(category=i)
+    print(article_list)
+    return render(request,"category_list.html",{"article_list":article_list,"blog": blog, "user": user,})

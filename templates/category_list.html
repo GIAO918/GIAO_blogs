@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block page-main %}
+    {% for acticle in acticle_list %}
+        <h1>{{ article.title }}</h1>
+        <span>{{ article.desc }}</span>
+    {% endfor %}
+{% endblock %}

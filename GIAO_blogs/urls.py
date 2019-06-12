@@ -24,7 +24,6 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url('^$',views.love),
     url(r"^index", views.index),
     url(r"^register", views.register),
     url(r"^login", views.login_in),
