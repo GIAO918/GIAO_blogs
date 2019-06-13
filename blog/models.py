@@ -80,6 +80,12 @@ class Article(models.Model):
     title = models.CharField(max_length=50, verbose_name="文章标题")  # 文章标题
     desc = models.CharField(max_length=255, verbose_name="文章描述")  # 文章描述
     create_time = models.DateTimeField(auto_now_add=True)  # 创建时间
+    # 评论数
+    comment_count = models.IntegerField(verbose_name="评论数", default=0)
+    # 点赞数
+    up_count = models.IntegerField(verbose_name="点赞数", default=0)
+    # 踩
+    down_count = models.IntegerField(verbose_name="踩数", default=0)
 
     category = models.ForeignKey(to="Category", to_field="nid", null=True, on_delete=models.CASCADE,verbose_name="所属分类")
     user = models.ForeignKey(to="UserInfo", to_field="nid", on_delete=models.CASCADE,verbose_name="用户")

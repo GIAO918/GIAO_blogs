@@ -4,4 +4,25 @@
         <h1>{{ article.title }}</h1>
         <span>{{ article.articledetail.content|safe }}</span>
     </div>
+    <div>
+
+
+        <div id="div_digg">
+            <div class="diggit action">
+                <span class="diggnum" id="digg_count">{{ article.up_count }}</span>
+            </div>
+            <div class="buryit action">
+                <span class="burynum" id="bury_count">{{ article.down_count }}</span>
+            </div>
+            <div class="clear"></div>
+        </div>
+
+        <script>
+            $("#div_digg .action").click(function () {
+                var is_up = $(this).hasClass("diggit"); //点击自己，如果属性有diggit返回True,赞成反对
+                var article_id = '{{ article.pk }}';
+            })
+        </script>
+
+    </div>
 {% endblock %}
