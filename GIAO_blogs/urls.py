@@ -34,4 +34,5 @@ urlpatterns = [
 
     # media路由配置
     url(r"media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
+
 ]

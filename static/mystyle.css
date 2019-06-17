@@ -81,3 +81,6 @@
     padding-top: 5px;
 }
 
+.clear{
+    clear: both;
+}

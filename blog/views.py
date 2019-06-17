@@ -5,6 +5,8 @@ from blog import models
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 
+import json
+
 
 # 注册功能视图
 def register(request):
@@ -98,9 +100,32 @@ def article_detail(request, username, pk):  # 跳转到文章详情页
 
 def ret_tags(request, username=None, i=None):
     user = models.UserInfo.objects.filter(username=username).first()
-    blog=user.blog
+    blog = user.blog
     i = models.Category.objects.filter(title=i)
     article_list = user.article_set.all()
     article_list = article_list.filter(category=i)
     print(article_list)
-    return render(request,"category_list.html",{"article_list":article_list,"blog": blog, "user": user,})
+    return render(request, "category_list.html", {"article_list": article_list, "blog": blog, "user": user, })
+
+
+# 文章点赞功能
+from django.db.models import F
+from django.http import JsonResponse
+
+
+def is_up(request):
+    up_down = request.POST.get("is_up")
+    article_id = request.POST.get("article_id")
+    is_up = json.loads(up_down)  # 赞成还是反对
+    response = {"state": True}
+    try:  # 把赞成或反对 记录插入数据库，如果报错说明记录已经存在，把状态返回给ajax
+        models.ArticleUpDown.objects.create(user=request.user, is_up=is_up, article_id=article_id)
+        if is_up:
+            models.Article.objects.filter(pk=article_id).update(up_count=F("up_count") + 1)
+        else:
+            models.Article.objects.filter(pk=article_id).update(down_count=F("down_count") + 1)
+    except Exception as e:
+        response["state"] = False
+        response["first_state"] = models.ArticleUpDown.objects.filter(user=request.user,
+                                                                      article_id=article_id).first().is_up
+    return JsonResponse(response)
