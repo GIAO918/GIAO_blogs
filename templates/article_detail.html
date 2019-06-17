@@ -20,7 +20,8 @@
 
         <script>
             $("#div_digg .action").click(function () {
-                var is_up = $(this).hasClass("diggit"); //点击自己，如果属性有diggit返回True,赞成反对
+                if('{{ request.user.username }}'){
+                    var is_up = $(this).hasClass("diggit"); //点击自己，如果属性有diggit返回True,赞成反对
                 var article_id = '{{ article.pk }}';
                 $.ajax({   // 向后端发送数据
                     url: "/blog/up_down",
@@ -60,6 +61,10 @@
                         }
                     }
                 })
+                }
+                else {
+                    location.href="/login"
+                }
             })
         </script>
     </div>
