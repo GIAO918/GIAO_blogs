@@ -129,3 +129,15 @@ def is_up(request):
         response["first_state"] = models.ArticleUpDown.objects.filter(user=request.user,
                                                                       article_id=article_id).first().is_up
     return JsonResponse(response)
+
+def comment(request):
+    article_id = request.POST.get("article_id")
+    pid = request.POST.get("pid")
+    content = request.POST.get("content")
+    user_id = request.user.pk
+
+    if not pid:
+        models.Comment.objects.create(article_id=article_id,user_id=user_id,content=content)
+
+
+    return HttpResponse("ok")

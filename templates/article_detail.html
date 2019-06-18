@@ -6,7 +6,7 @@
     </div>
     <div>
 
-
+        <!--点赞区域代码-->
         <div id="div_digg">
             <div class="diggit action">
                 <span class="diggnum" id="digg_count">{{ article.up_count }}</span>
@@ -18,54 +18,99 @@
             <div class="diggword" id="digg_tips" style="color: red;"></div>
         </div>
 
+        <!--评论区代码-->
+        <div class="comment_list"></div>
+        <div class="comment">
+            {% if request.user.username %}
+
+                <p>添加评论</p>
+                <p> 昵称：<input type="text" id="tbCommentAuthor" class="author" disabled="disabled" size="50"
+                              value={{ request.user.username }}>
+                </p>
+                <p>评论内容</p>
+                <textarea name="" id="comment_content" cols="80" rows="10"></textarea>
+                <div>
+                    <button id="comment_btn">提交评论</button>
+                </div>
+            {% else %}
+                <a href="/login">登录评论</a>
+            {% endif %}
+        </div>
+
+
+        <!--点赞区域的ajax发送-->
         <script>
             $("#div_digg .action").click(function () {
-                if('{{ request.user.username }}'){
+                if ('{{ request.user.username }}') {
                     var is_up = $(this).hasClass("diggit"); //点击自己，如果属性有diggit返回True,赞成反对
-                var article_id = '{{ article.pk }}';
-                $.ajax({   // 向后端发送数据
-                    url: "/blog/up_down",
-                    type: 'post',
-                    data: {
-                        is_up: is_up,
-                        article_id: article_id
-                    },
-                    success: function (data) {  //接收后端数据
-                        console.log(data);
-                        if (data.state) {  // 如果得到后端传来的添加成功状态，在前端代码处 +1
-                            if (is_up) {
-                                var val = $("#digg_count").text();
-                                val = parseInt(val) + 1;
-                                $("#digg_count").text(val);
-                            } else {
-                                var val = $("#bury_count").text();
-                                val = parseInt(val) + 1;
-                                $("#bury_count").text(val);
-                            }
-                        }
-                        else {
-                            if (data.first_state) {
-                                $("#digg_tips").html("您已经赞成过了")
-                                setTimeout(function () {
-                                    $("#digg_tips").html("")
-                                }, 1000)
-
+                    var article_id = '{{ article.pk }}';
+                    $.ajax({   // 向后端发送数据
+                        url: "/blog/up_down",
+                        type: 'post',
+                        data: {
+                            is_up: is_up,
+                            article_id: article_id
+                        },
+                        success: function (data) {  //接收后端数据
+                            console.log(data);
+                            if (data.state) {  // 如果得到后端传来的添加成功状态，在前端代码处 +1
+                                if (is_up) {
+                                    var val = $("#digg_count").text();
+                                    val = parseInt(val) + 1;
+                                    $("#digg_count").text(val);
+                                } else {
+                                    var val = $("#bury_count").text();
+                                    val = parseInt(val) + 1;
+                                    $("#bury_count").text(val);
+                                }
                             }
                             else {
-                                $("#digg_tips").html("您已经反对过了")
-                                setTimeout(function () {
-                                    $("#digg_tips").html("")
-                                }, 1000)
-                            }
+                                if (data.first_state) {
+                                    $("#digg_tips").html("您已经赞成过了")
+                                    setTimeout(function () {
+                                        $("#digg_tips").html("")
+                                    }, 1000)
 
+                                }
+                                else {
+                                    $("#digg_tips").html("您已经反对过了")
+                                    setTimeout(function () {
+                                        $("#digg_tips").html("")
+                                    }, 1000)
+                                }
+
+                            }
                         }
-                    }
-                })
+                    })
                 }
                 else {
-                    location.href="/login"
+                    location.href = "/login"
                 }
             })
         </script>
+
+
+        <!--评论功能ajax发送-->
+        <script>
+            $("#comment_btn").click(function () {
+                var content = $("#comment_content").val();
+                var article_id = '{{article.pk}}';
+                var pid = "";
+                $.ajax({
+                    url: "/blog/comment",
+                    type: "post",
+                    data: {
+                        pid: pid,
+                        article_id: article_id,
+                        content: content
+                    },
+                    success: function (data) {
+                        console.log(data)
+                    }
+                })
+            })
+        </script>
+
+
     </div>
 {% endblock %}

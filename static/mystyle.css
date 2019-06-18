@@ -80,7 +80,19 @@
     margin-top: 2px;
     padding-top: 5px;
 }
-
 .clear{
     clear: both;
+}
+
+/*文章详情页评论区样式*/
+.comment{
+    margin-top: 80px;
+}
+input.author{
+    background-image: url(/static/img/icon_form.gif);
+    background-repeat: no-repeat;
+    border: 1px solid #ccc;
+    padding: 4px 4px 4px 30px;
+    width: 300px;
+    font-size: 13px;
 }
