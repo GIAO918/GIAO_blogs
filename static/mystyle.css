@@ -50,7 +50,7 @@
 /*点赞图标的样式*/
 
 #div_digg {
-    float: right;
+    /*float: right;*/
     margin-bottom: 10px;
     margin-right: 30px;
     font-size: 12px;
@@ -88,6 +88,10 @@
 .comment{
     margin-top: 80px;
 }
+.comment_div{
+    margin-top: 80px;
+}
+
 input.author{
     background-image: url(/static/img/icon_form.gif);
     background-repeat: no-repeat;
