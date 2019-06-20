@@ -100,6 +100,8 @@ def article_detail(request, username, pk):  # 跳转到文章详情页
                   {"article": article_obj, "blog": blog, "user": user, "comment_list":comment_list})
 
 
+
+
 def ret_tags(request, username=None, i=None):
     user = models.UserInfo.objects.filter(username=username).first()
     blog = user.blog
@@ -138,13 +140,11 @@ def comment(request):
     content = request.POST.get("content")
     user_id = request.user.pk
     response = {}
-    if not pid:
-        comment_obj = models.Comment.objects.create(article_id=article_id,user_id=user_id,content=content)
+    # if not pid:
+    comment_obj = models.Comment.objects.create(article_id=article_id,user_id=user_id,content=content)
 
     response["create_time"] =comment_obj.create_time
     response["content"] = comment_obj.content
     response["username"] = comment_obj.user.username
 
-
-
-    return HttpResponse("ok")
+    return JsonResponse(response)

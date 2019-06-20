@@ -24,7 +24,7 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r"^index", views.index),
+
     url(r"^register", views.register),
     url(r"^login", views.login_in),
     url(r"^logout_view", views.logout_view),
@@ -34,5 +34,5 @@ urlpatterns = [
 
     # media路由配置
     url(r"media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
-
+    url(r"^", views.index),
 ]

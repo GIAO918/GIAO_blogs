@@ -78,7 +78,7 @@
                 {% for article in article_list %}
 
                     <div class="article">
-                        <h3><a href="/blog/article/{{ article.pk }}">{{ article.title }}</a></h3>
+                        <h3><a href="/blog/{{ article.user.username }}/article/{{ article.pk }}">{{ article.title }}</a></h3>
                         <div class="media">
                             <div class="media-left">
                                 <a href="#">
