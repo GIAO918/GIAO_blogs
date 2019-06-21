@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
 {% block page-main %}
+
+    <!--文章详情-->
     <div class="article-detail">
         <h1>{{ article.title }}</h1>
         <span>{{ article.articledetail.content|safe }}</span>
     </div>
-    <div>
 
+    <div>
         <!--点赞区域代码-->
         <div id="div_digg" class="clear">
             <div class="diggit action">
@@ -18,7 +20,7 @@
             <div class="diggword" id="digg_tips" style="color: red;"></div>
         </div>
 
-        <!--显示评论-->
+        <!--显示评论内容-->
         <div class="comment_div">
             <p>评论内容</p>
             <ul class="list-group">
@@ -28,15 +30,14 @@
                         <div><a href="">{{ forloop.counter }}楼</a>&nbsp;&nbsp;&nbsp;
                             <span style="color:gray">{{ comment.create_time |date:"Y-m-d H:i" }}</span>&nbsp;&nbsp;&nbsp;
                             <a href=""><span>{{ comment.user.username }}</span></a>&nbsp;&nbsp;&nbsp;
-                            <a class="pull-right reply_btn" username="{{ comment.user.username }}"><span>回复</span></a>
+                            <a class="pull-right reply_btn" username="{{ comment.user.username }}" comment_pk ={{ comment.pk }} ><span>回复</span></a>
                         </div>
                         {{ comment.content }}</li>
                 {% endfor %}
             </ul>
         </div>
 
-        <!--评论区代码-->
-        <div class="comment_list"></div>
+        <!--添加评论区域代码-->
         <div class="comment">
             {% if request.user.username %}
 
@@ -109,11 +110,13 @@
 
         <!--评论功能ajax发送-->
         <script>
-            // 提交评论
+            var pid = "";   //用来判断是根评论还是子评论，为空是根评论
             $("#comment_btn").click(function () {
                 var content = $("#comment_content").val();
                 var article_id = '{{article.pk}}';
-                var pid = "";
+                if (pid){
+                    content = content.slice(content.indexOf("\n")+1);
+                }
                 $.ajax({
                     url: "/blog/comment",
                     type: "post",
@@ -122,32 +125,33 @@
                         article_id: article_id,
                         content: content
                     },
+
+                    // 用ajax把添加的评论粗略显示在页面
                     success: function (data) {
                         console.log(data);
                         var create_time = data.create_time;
-                        var content =data.content;
+                        var content = data.content;
                         var username = data.username;
 
-                        var comment_li = "<li class=\"list-group-item\"><span style=\"color:gray\">"+create_time+"</span>&nbsp;&nbsp;&nbsp;\n" +
-                            "<a href=\"\"><span>"+username+"</span></a>&nbsp;&nbsp;&nbsp;\n" +
-                            " </div>\n"+content+"</li>";
+                        var comment_li = "<li class=\"list-group-item\"><span style=\"color:gray\">" + create_time + "</span>&nbsp;&nbsp;&nbsp;\n" +
+                            "<a href=\"\"><span>" + username + "</span></a>&nbsp;&nbsp;&nbsp;\n" +
+                            " </div>\n" + content + "</li>";
                         $(".list-group").append(comment_li);
 
-                        $("#comment_content").val("");
-                        pid="";
+                        $("#comment_content").val(""); //添加完评论清空评论区的输入
                     }
                 })
-            })
+            });
 
-            //回复评论
-            // 选定回复按钮
+            // 添加子评论，点击回复，跳转到评论输入框
             $(".list-group-item .reply_btn").click(function () {
                 $("#comment_content").focus();    //获取焦点
+                var v = "@" + $(this).attr("username") + "\n"; // 把@用户名 写入评论框
+                $("#comment_content").val(v);
 
-                var v = "@" + $(this).attr("username")+"\n"; // 把@用户名 写入评论框
-                $("#comment_content").val(v)
-
-            })
+                // 点击回复，把pid的值设为父评论的主键值
+                pid = $(this).attr("comment_pk");
+            });
         </script>
     </div>
-{% endblock %}
+    {%endblock %}
