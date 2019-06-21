@@ -151,11 +151,11 @@ class Comment(models.Model):
     评论表
     """
     nid = models.AutoField(primary_key=True)
-    article = models.ForeignKey(to="Article", to_field="nid", on_delete=models.CASCADE)
-    user = models.ForeignKey(to="UserInfo", to_field="nid", on_delete=models.CASCADE)
+    article = models.ForeignKey(to="Article", to_field="nid", on_delete=models.DO_NOTHING)
+    user = models.ForeignKey(to="UserInfo", to_field="nid", on_delete=models.DO_NOTHING)
     content = models.CharField(max_length=255)  # 评论内容
     create_time = models.DateTimeField(auto_now_add=True)
-    parent_comment = models.ForeignKey("self", null=True,blank=True, on_delete=models.CASCADE)
+    parent_comment = models.ForeignKey("self", null=True,blank=True, on_delete=models.DO_NOTHING)
     #  blank = True 设置这个参数，在django admin配置里边也可以为空
     def __str__(self):
         return self.content

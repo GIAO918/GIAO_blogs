@@ -30,9 +30,25 @@
                         <div><a href="">{{ forloop.counter }}楼</a>&nbsp;&nbsp;&nbsp;
                             <span style="color:gray">{{ comment.create_time |date:"Y-m-d H:i" }}</span>&nbsp;&nbsp;&nbsp;
                             <a href=""><span>{{ comment.user.username }}</span></a>&nbsp;&nbsp;&nbsp;
-                            <a class="pull-right reply_btn" username="{{ comment.user.username }}" comment_pk ={{ comment.pk }} ><span>回复</span></a>
+                            <a class="pull-right reply_btn" username="{{ comment.user.username }}"
+                               comment_pk={{ comment.pk }}><span>回复</span></a>
                         </div>
-                        {{ comment.content }}</li>
+                    <!--如果该评论有父评论，把父评论的值渲染到子评论上边-->
+                        {% if comment.parent_comment %}
+                            <div class = "parent_momment well">
+                                <p>{{ comment.parent_comment.user.username }}&nbsp;:&nbsp;&nbsp;
+                                    {{ comment.parent_comment.content }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <div class="con">
+                            <p>
+                                {{ comment.content }}
+                            </p>
+                        </div>
+                    </li>
+
+
                 {% endfor %}
             </ul>
         </div>
@@ -114,8 +130,9 @@
             $("#comment_btn").click(function () {
                 var content = $("#comment_content").val();
                 var article_id = '{{article.pk}}';
-                if (pid){
-                    content = content.slice(content.indexOf("\n")+1);
+                // 如果是子评论，切片下评论内容
+                if (pid) {
+                    content = content.slice(content.indexOf("\n") + 1);
                 }
                 $.ajax({
                     url: "/blog/comment",
@@ -134,15 +151,16 @@
                         var username = data.username;
 
                         var comment_li = "<li class=\"list-group-item\"><span style=\"color:gray\">" + create_time + "</span>&nbsp;&nbsp;&nbsp;\n" +
-                            "<a href=\"\"><span>" + username + "</span></a>&nbsp;&nbsp;&nbsp;\n" +
-                            " </div>\n" + content + "</li>";
+                            "<a href=\"\"><span>" + username + "</span></a>" +
+                            " </div><p>" + content + "</p></li>";
                         $(".list-group").append(comment_li);
 
                         $("#comment_content").val(""); //添加完评论清空评论区的输入
+                        pid = ""; //添加完评论默认再次评论是根评论
                     }
                 })
             });
-
+            //
             // 添加子评论，点击回复，跳转到评论输入框
             $(".list-group-item .reply_btn").click(function () {
                 $("#comment_content").focus();    //获取焦点
@@ -154,4 +172,4 @@
             });
         </script>
     </div>
-    {%endblock %}
+{% endblock %}

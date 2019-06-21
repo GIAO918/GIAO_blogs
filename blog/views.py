@@ -146,7 +146,7 @@ def comment(request):
         comment_obj = models.Comment.objects.create(article_id=article_id, parent_comment_id=pid, user_id=user_id,
                                                     content=content)
 
-    response["create_time"] = comment_obj.create_time
+    response["create_time"] = comment_obj.create_time.strftime("%a %b %d %H:%M:%S %Y")
     response["content"] = comment_obj.content
     response["username"] = comment_obj.user.username
 
