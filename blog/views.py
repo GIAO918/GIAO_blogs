@@ -155,6 +155,27 @@ def comment(request):
 
 # 用户添加文章
 def add_article(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        article_content = request.POST.get("article_content")
+        user = request.user
+
+        from bs4 import BeautifulSoup
+
+        bs = BeautifulSoup(article_content, "html.parser")
+        desc = bs.text[0:150] + "..."
+
+        # 过滤非法标签
+        for tag in bs.find_all():
+
+            print(tag.name)
+
+            if tag.name in ["script", "link"]:
+                tag.decompose()
+
+        article_obj = models.Article.objects.create(user=user, title=title, desc=desc)
+        models.ArticleDetail.objects.create(content=str(bs), article=article_obj)
+        return HttpResponse("添加成功")
     return render(request, "add_article.html")
 
 
