@@ -151,3 +151,27 @@ def comment(request):
     response["username"] = comment_obj.user.username
 
     return JsonResponse(response)
+
+
+# 用户添加文章
+def add_article(request):
+    return render(request, "add_article.html")
+
+
+# 用户添加文章中上传的媒体文件
+from GIAO_blogs import settings
+import os, json
+
+
+def upload(request):
+    obj = request.FILES.get("upload_img")
+
+    with open(os.path.join(settings.MEDIA_ROOT, "add_article_img", obj.name), "wb")as f:
+        for line in obj:
+            f.write(line)
+    # 返回url给前端编辑器预览图片
+    res = {
+        "error": 0,
+        "url": "/media/add_article_img/" + obj.name
+    }
+    return HttpResponse(json.dumps(res))

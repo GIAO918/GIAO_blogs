@@ -32,7 +32,12 @@ urlpatterns = [
     # 将所有以blog开头的url，都分发给blog这个app下边的urls来处理
     url(r"^blog/", include(blog_urls)),
 
+    # 用户博客图片上传
+    url(r"^upload",views.upload),
+
     # media路由配置
     url(r"media/(?P<path>.*)$", serve, {"document_root": settings.MEDIA_ROOT}),
     url(r"^", views.index),
+
+
 ]
